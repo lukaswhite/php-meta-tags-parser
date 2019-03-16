@@ -1,0 +1,24 @@
+{
+    "name": "lukaswhite/php-meta-tags-parser",
+    "description": "A PHP package for parsing meta tags in HTML documents",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lukaswhite",
+            "email": "hello@lukaswhite.com"
+        }
+    ],
+    "require": {
+        "thesoftwarefanatics/php-html-parser": "^1.8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "7.0",
+        "phpunit/php-code-coverage": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lukaswhite\\MetaTagsParser\\": "src/"
+        }
+    }
+}
