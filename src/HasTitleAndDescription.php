@@ -26,7 +26,7 @@ trait HasTitleAndDescription
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -44,7 +44,7 @@ trait HasTitleAndDescription
     /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }

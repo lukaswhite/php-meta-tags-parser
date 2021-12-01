@@ -23,7 +23,7 @@ class Result
      *
      * @var array
      */
-    protected $keywords = [ ];
+    protected $keywords = [];
 
     /**
      * The Facebook app ID
@@ -35,7 +35,7 @@ class Result
     /**
      * Result constructor.
      */
-    public function __construct( )
+    public function __construct()
     {
         $this->openGraph = new OpenGraph( );
     }
@@ -45,7 +45,7 @@ class Result
      *
      * @return OpenGraph
      */
-    public function openGraph( ) : OpenGraph
+    public function openGraph(): OpenGraph
     {
         return $this->openGraph;
     }
@@ -55,7 +55,7 @@ class Result
      *
      * @return array
      */
-    public function getKeywords()
+    public function getKeywords(): array
     {
         return $this->keywords;
     }
@@ -66,12 +66,12 @@ class Result
      * @param $keywords
      * @return $this
      */
-    public function setKeywords( $keywords )
+    public function setKeywords($keywords): self
     {
-        if ( is_string( $keywords ) ) {
+        if (is_string($keywords)) {
             $keywords = array_map(
-                function( $keyword ) {
-                    return trim( $keyword );
+                function($keyword) {
+                    return trim($keyword);
                 },
                 explode( ',', $keywords )
             );
@@ -84,7 +84,7 @@ class Result
     /**
      * @return string
      */
-    public function getFacebookAppId()
+    public function getFacebookAppId(): ?string
     {
         return $this->facebookAppId;
     }
@@ -93,7 +93,7 @@ class Result
      * @param string $facebookAppId
      * @return Result
      */
-    public function setFacebookAppId($facebookAppId)
+    public function setFacebookAppId($facebookAppId): self
     {
         $this->facebookAppId = $facebookAppId;
         return $this;
@@ -104,13 +104,13 @@ class Result
      *
      * @return array
      */
-    public function toArray( )
+    public function toArray(): array
     {
         return [
-            'title'             =>  $this->getTitle( ),
-            'description'       =>  $this->getDescription( ),
-            'keywords'          =>  $this->getKeywords( ),
-            'og'                =>  $this->openGraph( )->toArray( ),
+            'title'             =>  $this->getTitle(),
+            'description'       =>  $this->getDescription(),
+            'keywords'          =>  $this->getKeywords(),
+            'og'                =>  $this->openGraph()->toArray(),
         ];
     }
 

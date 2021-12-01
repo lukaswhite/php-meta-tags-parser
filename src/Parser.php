@@ -20,67 +20,67 @@ class Parser
      * @param string $html
      * @return Result
      */
-    public function parse( string $html ) : Result
+    public function parse(string $html) : Result
     {
-        $result = new Result( );
+        $result = new Result();
 
-        $dom = new Dom( );
-        $dom->load( $html );
+        $dom = new Dom();
+        $dom->loadStr($html);
 
-        $title = $dom->find('title' )[ 0 ];
+        $title = $dom->find('title')[0];
 
-        if ( $title ) {
-            $result->setTitle( $title->text );
+        if ($title) {
+            $result->setTitle($title->text);
         }
 
-        $metaTags = $dom->find('meta' );
+        $metaTags = $dom->find('meta');
 
-        foreach( $metaTags as $tag )
+        foreach($metaTags as $tag)
         {
-            /** @var Dom\AbstractNode $name */
+            /** @var \PHPHtmlParser\Dom\AbstractNode $name */
 
-            $name = $tag->getAttribute( 'name' ) ? $tag->getAttribute( 'name' ) : $tag->getAttribute( 'property' );
+            $name = $tag->getAttribute('name') ? $tag->getAttribute('name') : $tag->getAttribute('property');
 
-            switch ( $name ) {
+            switch ($name) {
                 case 'description':
-                    $result->setDescription( $tag->getAttribute( 'content' ) );
+                    $result->setDescription($tag->getAttribute('content'));
                     break;
                 case 'keywords':
-                    $result->setKeywords( $tag->getAttribute( 'content' ) );
+                    $result->setKeywords($tag->getAttribute('content'));
                     break;
                 case 'og:site_name':
-                    $result->openGraph( )->setSiteName( $tag->getAttribute( 'content' ) );
+                    $result->openGraph()->setSiteName($tag->getAttribute('content'));
                     break;
                 case 'og:title':
-                    $result->openGraph( )->setTitle( $tag->getAttribute( 'content' ) );
+                    $result->openGraph()->setTitle($tag->getAttribute('content'));
                     break;
                 case 'og:description':
-                    $result->openGraph( )->setDescription( $tag->getAttribute( 'content' ) );
+                    $result->openGraph()->setDescription($tag->getAttribute('content'));
                     break;
                 case 'og:image':
                 case 'og:secure_image':
-                    $result->openGraph( )->addImage( $tag->getAttribute( 'content' ) );
+                    $result->openGraph()->addImage($tag->getAttribute('content'));
                     break;
                 case 'og:type':
-                    $result->openGraph( )->setType( $tag->getAttribute( 'content' ) );
+                    $result->openGraph()->setType($tag->getAttribute('content'));
                     break;
                 case 'og:url':
-                    $result->openGraph( )->setUrl( $tag->getAttribute( 'content' ) );
+                    $result->openGraph()->setUrl($tag->getAttribute('content'));
                     break;
                 case 'og:locale':
-                    $result->openGraph( )->setLocale( $tag->getAttribute( 'content' ) );
+                    $result->openGraph()->setLocale($tag->getAttribute('content'));
                     break;
                 case 'og:latitude':
-                    $result->openGraph( )->setLatitude( floatval( $tag->getAttribute( 'content' ) ) );
+                    $result->openGraph()->setLatitude(floatval($tag->getAttribute('content')));
                     break;
                 case 'og:longitude':
-                    $result->openGraph( )->setLongitude( floatval( $tag->getAttribute( 'content' ) ) );
+                    $result->openGraph()->setLongitude(floatval($tag->getAttribute('content')));
                     break;
                 case 'og:altitude':
-                    $result->openGraph( )->setAltitude( intval( $tag->getAttribute( 'content' ) ) );
+                    $result->openGraph()->setAltitude(intval($tag->getAttribute('content')));
                     break;
                 case 'fb:app_id':
-                    $result->setFacebookAppId( $tag->getAttribute( 'content' ) );
+                    $result->setFacebookAppId($tag->getAttribute('content'));
                     break;
             }
         }

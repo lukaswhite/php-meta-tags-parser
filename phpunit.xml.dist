@@ -7,32 +7,28 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="true"
-         syntaxCheck="false">
+         stopOnFailure="true">
 
     <testsuites>
-        <testsuite name="Meta Tags Parser Test Suite">
+        <testsuite name="PHP Meta Tags Parser Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+    <coverage>
+        <include>
             <directory suffix=".php">src</directory>
-        </whitelist>
-    </filter>
+        </include>
 
-    <filter>
-        <blacklist>
-            <directory>vendor</directory>
-        </blacklist>
-    </filter>
+        <exclude>
+            <directory suffix=".php">vendor</directory>
+        </exclude>
 
-    <logging>
-        <log type="coverage-html" target="./log/codeCoverage" charset="UTF-8"
-             yui="true" highlight="true" lowUpperBound="50" highLowerBound="80"
-             showUncoveredFiles="false" />
-        <!-- <log type="testdox-html" target="./log/testdox.html" /> -->
-    </logging>
+        <report>
+            <html outputDirectory="html-coverage" lowUpperBound="50" highLowerBound="90"/>
+        </report>
+
+    </coverage>
+
 
 </phpunit>

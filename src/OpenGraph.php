@@ -18,7 +18,7 @@ class OpenGraph
      *
      * @var array
      */
-    protected $images = [ ];
+    protected $images = [];
 
     /**
      * The type
@@ -72,7 +72,7 @@ class OpenGraph
     /**
      * @return array
      */
-    public function getImages( ) : array
+    public function getImages(): array
     {
         return $this->images;
     }
@@ -83,7 +83,7 @@ class OpenGraph
      * @param string $url
      * @return self
      */
-    public function addImage( string $url ) : self
+    public function addImage(string $url): self
     {
         $this->images[ ] = $url;
         return $this;
@@ -92,7 +92,7 @@ class OpenGraph
     /**
      * @return string
      */
-    public function getType( ) : ?string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -101,7 +101,7 @@ class OpenGraph
      * @param string $type
      * @return self
      */
-    public function setType( string $type ) : self
+    public function setType(string $type): self
     {
         $this->type = $type;
         return $this;
@@ -110,7 +110,7 @@ class OpenGraph
     /**
      * @return string
      */
-    public function getUrl( ) : ?string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -119,7 +119,7 @@ class OpenGraph
      * @param string $url
      * @return self
      */
-    public function setUrl( $url ) : self
+    public function setUrl($url): self
     {
         $this->url = $url;
         return $this;
@@ -128,7 +128,7 @@ class OpenGraph
     /**
      * @return string
      */
-    public function getSiteName( ) : ?string
+    public function getSiteName(): ?string
     {
         return $this->siteName;
     }
@@ -137,7 +137,7 @@ class OpenGraph
      * @param string $siteName
      * @return self
      */
-    public function setSiteName( string $siteName ) : self
+    public function setSiteName(string $siteName): self
     {
         $this->siteName = $siteName;
         return $this;
@@ -146,7 +146,7 @@ class OpenGraph
     /**
      * @return string
      */
-    public function getLocale( ) : ?string
+    public function getLocale(): ?string
     {
         return $this->locale;
     }
@@ -155,7 +155,7 @@ class OpenGraph
      * @param string $locale
      * @return self
      */
-    public function setLocale( string $locale ) : self
+    public function setLocale(string $locale): self
     {
         $this->locale = $locale;
         return $this;
@@ -164,7 +164,7 @@ class OpenGraph
     /**
      * @return float
      */
-    public function getLatitude()
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
@@ -173,7 +173,7 @@ class OpenGraph
      * @param float $latitude
      * @return OpenGraph
      */
-    public function setLatitude($latitude)
+    public function setLatitude($latitude): self
     {
         $this->latitude = $latitude;
         return $this;
@@ -182,7 +182,7 @@ class OpenGraph
     /**
      * @return float
      */
-    public function getLongitude()
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
@@ -191,7 +191,7 @@ class OpenGraph
      * @param float $longitude
      * @return OpenGraph
      */
-    public function setLongitude($longitude)
+    public function setLongitude($longitude): self
     {
         $this->longitude = $longitude;
         return $this;
@@ -200,7 +200,7 @@ class OpenGraph
     /**
      * @return int
      */
-    public function getAltitude()
+    public function getAltitude(): ?int
     {
         return $this->altitude;
     }
@@ -209,7 +209,7 @@ class OpenGraph
      * @param int $altitude
      * @return OpenGraph
      */
-    public function setAltitude($altitude)
+    public function setAltitude($altitude): self
     {
         $this->altitude = $altitude;
         return $this;
@@ -220,18 +220,18 @@ class OpenGraph
      *
      * @return array
      */
-    public function toArray( ) : array
+    public function toArray(): array
     {
         return [
-            'site_name'         =>  $this->getSiteName( ),
-            'type'              =>  $this->getType( ),
-            'title'             =>  $this->getTitle( ),
-            'description'       =>  $this->getDescription( ),
-            'locale'            =>  $this->getLocale( ),
-            'images'            =>  $this->getImages( ),
-            'latitude'          =>  $this->getLatitude( ),
-            'longitude'         =>  $this->getLongitude( ),
-            'altitude'          =>  $this->getAltitude( ),
+            'site_name'         =>  $this->getSiteName(),
+            'type'              =>  $this->getType(),
+            'title'             =>  $this->getTitle(),
+            'description'       =>  $this->getDescription(),
+            'locale'            =>  $this->getLocale(),
+            'images'            =>  $this->getImages(),
+            'latitude'          =>  $this->getLatitude(),
+            'longitude'         =>  $this->getLongitude(),
+            'altitude'          =>  $this->getAltitude(),
         ];
     }
 }
