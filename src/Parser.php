@@ -2,7 +2,7 @@
 
 namespace Lukaswhite\MetaTagsParser;
 
-use PHPHtmlParser\Dom;
+use voku\helper\HtmlDomParser;
 
 /**
  * Class Parser
@@ -24,21 +24,18 @@ class Parser
     {
         $result = new Result();
 
-        $dom = new Dom();
-        $dom->loadStr($html);
+        $dom = HtmlDomParser::str_get_html($html);
 
-        $title = $dom->find('title')[0];
+        $title = $dom->findOne('title');
 
         if ($title) {
             $result->setTitle($title->text);
         }
 
-        $metaTags = $dom->find('meta');
+        $metaTags = $dom->findMulti('meta');
 
         foreach($metaTags as $tag)
         {
-            /** @var \PHPHtmlParser\Dom\AbstractNode $name */
-
             $name = $tag->getAttribute('name') ? $tag->getAttribute('name') : $tag->getAttribute('property');
 
             switch ($name) {
