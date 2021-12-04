@@ -36,6 +36,22 @@ class Feed
     }
 
     /**
+     * @return bool
+     */
+    public function isRSS(): bool
+    {
+        return $this->type === self::RSS;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAtom(): bool
+    {
+        return $this->type === self::ATOM;
+    }
+
+    /**
      * @param string $type
      * @return self
      */

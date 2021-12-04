@@ -48,8 +48,18 @@ It will also extract RSS and/or Atom feeds; `getFeeds()` returns an array of ins
 
 ```php
 $feed->getType(); // Feed::RSS or Feed::ATOM
+$feed->isRSS();
+$feed->isAtom();
 $feed->getUri();
 $feed->getTitle();
+```
+
+The `getFeeds()` method accepts an optional `$type` argument, to choose one or the other:
+
+```php
+$result->getFeeds(Feed::RSS);
+// or
+$result->getFeeds(Feed::ATOM);
 ```
 
 ## Cleansing the data

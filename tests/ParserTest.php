@@ -292,9 +292,13 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(is_array($result->getFeeds()));
         $this->assertEquals(2, count($result->getFeeds()));
 
+        $this->assertEquals(1, count($result->getFeeds(\Lukaswhite\MetaTagsParser\Feed::RSS)));
+        $this->assertEquals(1, count($result->getFeeds(\Lukaswhite\MetaTagsParser\Feed::ATOM)));
+
         $this->assertArrayHasKey('feeds', $result->toArray());
         $this->assertTrue(is_array($result->toArray()['feeds']));
         $this->assertEquals(2, count($result->toArray()['feeds']));
+
     }
 
     public function test_extracts_rss_feeds()
@@ -316,6 +320,8 @@ class ParserTest extends \PHPUnit\Framework\TestCase
 
         $this->assertTrue(is_array($result->getFeeds()));
         $this->assertEquals(1, count($result->getFeeds()));
+        $this->assertEquals(1, count($result->getFeeds(\Lukaswhite\MetaTagsParser\Feed::RSS)));
+        $this->assertEquals(0, count($result->getFeeds(\Lukaswhite\MetaTagsParser\Feed::ATOM)));
         $this->assertInstanceOf(\Lukaswhite\MetaTagsParser\Feed::class, $result->getFeeds()[0]);
         /** @var \Lukaswhite\MetaTagsParser\Feed $feed */
         $feed = $result->getFeeds()[0];
@@ -354,6 +360,8 @@ class ParserTest extends \PHPUnit\Framework\TestCase
 
         $this->assertTrue(is_array($result->getFeeds()));
         $this->assertEquals(1, count($result->getFeeds()));
+        $this->assertEquals(1, count($result->getFeeds(\Lukaswhite\MetaTagsParser\Feed::ATOM)));
+        $this->assertEquals(0, count($result->getFeeds(\Lukaswhite\MetaTagsParser\Feed::RSS)));
         $this->assertInstanceOf(\Lukaswhite\MetaTagsParser\Feed::class, $result->getFeeds()[0]);
         /** @var \Lukaswhite\MetaTagsParser\Feed $feed */
         $feed = $result->getFeeds()[0];

@@ -140,11 +140,14 @@ class Result
     }
 
     /**
+     * @param string $type
      * @return array
      */
-    public function getFeeds(): array
+    public function getFeeds(string $type = null): array
     {
-        return $this->feeds;
+        return $type ? array_filter($this->feeds, function(Feed $feed) use ($type) {
+            return $feed->getType() === $type;
+        }) : $this->feeds;
     }
 
     /**
