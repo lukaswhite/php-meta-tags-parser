@@ -29,6 +29,7 @@ The `parse()` method returns an object that encapsulates any page data it's extr
 $result->getTitle();
 $result->getDescription();
 $result->getKeywords();
+$result->getUrl();
 $result->getFacebookAppId();
 
 $result->openGraph()->getSiteName();

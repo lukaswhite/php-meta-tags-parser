@@ -43,6 +43,17 @@ class ParserTest extends \PHPUnit\Framework\TestCase
             $arr[ 'description' ]
         );
 
+        $this->assertEquals(
+            'http://example.com',
+            $result->getUrl()
+        );
+
+        $this->assertArrayHasKey( 'url', $arr );
+        $this->assertEquals(
+            'http://example.com',
+            $arr[ 'url' ]
+        );
+
         $this->assertTrue(
             is_array( $result->getKeywords( ) )
         );

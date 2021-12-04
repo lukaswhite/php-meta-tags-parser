@@ -75,6 +75,9 @@ class Parser
                 case 'keywords':
                     $result->setKeywords($this->getTagAttribute($tag));
                     break;
+                case 'url':
+                    $result->setUrl($this->getTagAttribute($tag));
+                    break;
                 case 'og:site_name':
                     $result->openGraph()->setSiteName($this->getTagAttribute($tag));
                     break;

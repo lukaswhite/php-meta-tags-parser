@@ -12,6 +12,13 @@ class Result
     use HasTitleAndDescription;
 
     /**
+     * The site's URL, as it appears - if present - in the meta tags.
+     *
+     * @var string
+     */
+    protected $url;
+
+    /**
      * The Open Graph data
      *
      * @var OpenGraph
@@ -38,6 +45,22 @@ class Result
     public function __construct()
     {
         $this->openGraph = new OpenGraph( );
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl(string $url): void
+    {
+        $this->url = $url;
     }
 
     /**
@@ -110,6 +133,7 @@ class Result
             'title'             =>  $this->getTitle(),
             'description'       =>  $this->getDescription(),
             'keywords'          =>  $this->getKeywords(),
+            'url'               =>  $this->getUrl(),
             'og'                =>  $this->openGraph()->toArray(),
         ];
     }
