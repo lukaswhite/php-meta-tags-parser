@@ -2,7 +2,7 @@
 
 Extracts metadata (title, description, Open Graph etc) from the content of a web page.
 
-Note that this library simply deals with raw HTML, rather than try to tie you down to one particular method for retrieving the content of an external URL.
+Note that this library simply deals with raw HTML, rather than try to tie you down to one particular method for retrieving the content of an external URL. (I usually use Guzzle, but to make it a dependency might cause difficulties in terms of versioning.)
 
 ## Installation
 
@@ -54,8 +54,8 @@ $feed->getTitle();
 
 ## Cleansing the data
 
-The package ships with a very simple string cleanser; essentially it just decodes any HTML entities. You're free to provide your own cleanser; just implement the `CleansesStrings` interface, and provide an instance to the parser's constructor.
+The package ships with a very simple string cleanser; essentially it just decodes any HTML entities. You're free to provide your own cleanser; just implement the `CleansesStrings` interface, and provide an instance to the parser's constructor. It simply needs to provide a `run()` method, that accepts a string and returns the cleansed version.
 
-## Sanitzing the data
+## Sanitizing the data
 
-The package ships with a very simple string sanitzer; under the hood it simply uses the `strip_tags()` function. If you wish to provide your own sanitizer, just implement the `SanitizesStrings` interface, and provide an instance to the parser's constructor.
+The package ships with a very simple string sanitzer; under the hood it simply uses the `strip_tags()` function. If you wish to provide your own sanitizer, just implement the `SanitizesStrings` interface, and provide an instance to the parser's constructor. It simply needs to provide a `run()` method, that accepts a string and returns the sanitized version.
