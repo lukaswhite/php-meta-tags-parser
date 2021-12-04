@@ -2,7 +2,12 @@
 
 namespace Lukaswhite\MetaTagsParser;
 
+use Lukaswhite\MetaTagsParser\Cleanser\Cleanser;
+use Lukaswhite\MetaTagsParser\Cleanser\CleansesStrings;
+use Lukaswhite\MetaTagsParser\Sanitizer\Sanitizer;
+use Lukaswhite\MetaTagsParser\Sanitizer\SanitizesStrings;
 use voku\helper\HtmlDomParser;
+use voku\helper\SimpleHtmlDom;
 
 /**
  * Class Parser
@@ -14,6 +19,31 @@ use voku\helper\HtmlDomParser;
  */
 class Parser
 {
+    /**
+     * @var CleansesStrings
+     */
+    protected $cleanser;
+
+    /**
+     * @var SanitizesStrings
+     */
+    protected $sanitizer;
+
+    /**
+     * Parser constructor.
+     *
+     * The package provides very simple methods for cleansing and sanitizing strings;
+     * if you wish to override them, it's as simple as passing them into the constructor.
+     *
+     * @param CleansesStrings|null $cleanser
+     * @param SanitizesStrings|null $sanitizer
+     */
+    public function __construct(CleansesStrings $cleanser = null, SanitizesStrings $sanitizer = null)
+    {
+        $this->cleanser = $cleanser ?? new Cleanser();
+        $this->sanitizer = $sanitizer ?? new Sanitizer();
+    }
+
     /**
      * Parse the provided HTML, and extract the metadata
      *
@@ -29,7 +59,7 @@ class Parser
         $title = $dom->findOne('title');
 
         if ($title) {
-            $result->setTitle($title->text);
+            $result->setTitle($this->cleanser->run($this->sanitizer->run($title->text)));
         }
 
         $metaTags = $dom->findMulti('meta');
@@ -40,50 +70,62 @@ class Parser
 
             switch ($name) {
                 case 'description':
-                    $result->setDescription($tag->getAttribute('content'));
+                    $result->setDescription($this->getTagAttribute($tag));
                     break;
                 case 'keywords':
-                    $result->setKeywords($tag->getAttribute('content'));
+                    $result->setKeywords($this->getTagAttribute($tag));
                     break;
                 case 'og:site_name':
-                    $result->openGraph()->setSiteName($tag->getAttribute('content'));
+                    $result->openGraph()->setSiteName($this->getTagAttribute($tag));
                     break;
                 case 'og:title':
-                    $result->openGraph()->setTitle($tag->getAttribute('content'));
+                    $result->openGraph()->setTitle($this->getTagAttribute($tag));
                     break;
                 case 'og:description':
-                    $result->openGraph()->setDescription($tag->getAttribute('content'));
+                    $result->openGraph()->setDescription($this->getTagAttribute($tag));
                     break;
                 case 'og:image':
                 case 'og:secure_image':
-                    $result->openGraph()->addImage($tag->getAttribute('content'));
+                    $result->openGraph()->addImage($this->getTagAttribute($tag));
                     break;
                 case 'og:type':
-                    $result->openGraph()->setType($tag->getAttribute('content'));
+                    $result->openGraph()->setType($this->getTagAttribute($tag));
                     break;
                 case 'og:url':
-                    $result->openGraph()->setUrl($tag->getAttribute('content'));
+                    $result->openGraph()->setUrl($this->getTagAttribute($tag));
                     break;
                 case 'og:locale':
-                    $result->openGraph()->setLocale($tag->getAttribute('content'));
+                    $result->openGraph()->setLocale($this->getTagAttribute($tag));
                     break;
                 case 'og:latitude':
-                    $result->openGraph()->setLatitude(floatval($tag->getAttribute('content')));
+                    $result->openGraph()->setLatitude(floatval($this->getTagAttribute($tag)));
                     break;
                 case 'og:longitude':
-                    $result->openGraph()->setLongitude(floatval($tag->getAttribute('content')));
+                    $result->openGraph()->setLongitude(floatval($this->getTagAttribute($tag)));
                     break;
                 case 'og:altitude':
-                    $result->openGraph()->setAltitude(intval($tag->getAttribute('content')));
+                    $result->openGraph()->setAltitude(intval($this->getTagAttribute($tag)));
                     break;
                 case 'fb:app_id':
-                    $result->setFacebookAppId($tag->getAttribute('content'));
+                    $result->setFacebookAppId($this->getTagAttribute($tag));
                     break;
             }
         }
 
         return $result;
 
+    }
+
+    /**
+     * @param SimpleHtmlDom $tag
+     * @param string $name
+     * @return string
+     */
+    protected function getTagAttribute(SimpleHtmlDom $tag, string $name = 'content')
+    {
+        return $this->cleanser->run(
+            $this->sanitizer->run($tag->getAttribute($name))
+        );
     }
 
 }

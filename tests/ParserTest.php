@@ -214,4 +214,50 @@ class ParserTest extends \PHPUnit\Framework\TestCase
             $result->getFacebookAppId()
         );
     }
+
+    public function test_escapes_stray_html_in_page_descriptions()
+    {
+        $html = file_get_contents(
+            sprintf(
+                '%s%s%s%s%s',
+                __DIR__,
+                DIRECTORY_SEPARATOR,
+                'fixtures',
+                DIRECTORY_SEPARATOR,
+                'html-in-page-description.html'
+            )
+        );
+
+        $parser = new \Lukaswhite\MetaTagsParser\Parser();
+
+        $result = $parser->parse($html);
+
+        $this->assertEquals(
+            'Ticketless fans looked "like a line of 6,000 zombies trying to get in" and one even "hijacked a disabled child\'s wheelchair".',
+            $result->getDescription()
+        );
+    }
+
+    public function test_removes_any_erroneous_tags()
+    {
+        $html = file_get_contents(
+            sprintf(
+                '%s%s%s%s%s',
+                __DIR__,
+                DIRECTORY_SEPARATOR,
+                'fixtures',
+                DIRECTORY_SEPARATOR,
+                'stray-tags.html'
+            )
+        );
+
+        $parser = new \Lukaswhite\MetaTagsParser\Parser();
+
+        $result = $parser->parse($html);
+
+        $this->assertEquals(
+            'I have a script.',
+            $result->getDescription()
+        );
+    }
 }
