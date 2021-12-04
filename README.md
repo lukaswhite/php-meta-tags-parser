@@ -40,6 +40,7 @@ $result->openGraph()->getLocale();
 $result->openGraph()->getImages(); // returns an array of URLs
 $result->openGraph()->getLatitude();
 $result->openGraph()->getLongitude();
+$result->openGraph()->getAltitude();
 
 $result->toArray(); // all of the extracted metadata
 ```
