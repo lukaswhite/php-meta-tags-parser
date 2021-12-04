@@ -15,7 +15,9 @@ composer require lukaswhite/php-meta-tags-parser
 ```php
 use Lukaswhite\MetaTagsParser\Parser;
 
-$parser = new \Lukaswhite\MetaTagsParser\Parser();
+$html = '<html><head>...</head></html>';
+
+$parser = new Parser();
 $result = $parser->parse($html);
 ```
 
@@ -24,8 +26,6 @@ $result = $parser->parse($html);
 The `parse()` method returns an object that encapsulates any page data it's extracted from the provided HTML.
 
 ```php
-$result = new \Lukaswhite\MetaTagsParser\Result();
-
 $result->getTitle();
 $result->getDescription();
 $result->getKeywords();
