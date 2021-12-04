@@ -40,6 +40,13 @@ class Result
     protected $facebookAppId;
 
     /**
+     * RSS/Atom feeds
+     *
+     * @var array
+     */
+    protected $feeds = [];
+
+    /**
      * Result constructor.
      */
     public function __construct()
@@ -123,6 +130,24 @@ class Result
     }
 
     /**
+     * @param Feed $feed
+     * @return $this
+     */
+    public function addFeed(Feed $feed): self
+    {
+        $this->feeds[] = $feed;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFeeds(): array
+    {
+        return $this->feeds;
+    }
+
+    /**
      * Convert the result into an array
      *
      * @return array
@@ -135,6 +160,12 @@ class Result
             'keywords'          =>  $this->getKeywords(),
             'url'               =>  $this->getUrl(),
             'og'                =>  $this->openGraph()->toArray(),
+            'feeds'             =>  array_map(
+                function(Feed $feed) {
+                    return $feed->toArray();
+                },
+                $this->feeds
+            )
         ];
     }
 

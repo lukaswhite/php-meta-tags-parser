@@ -115,6 +115,30 @@ class Parser
             }
         }
 
+        $linkTags = $dom->findMulti('link');
+
+        foreach($linkTags as $tag)
+        {
+            if($tag->getAttribute('rel') === 'alternate') {
+                if($tag->getAttribute('type') === 'application/rss+xml') {
+                    $feed = (new Feed())
+                        ->setType(Feed::RSS)
+                        ->setUri($this->getTagAttribute($tag, 'href'));
+                    if($tag->hasAttribute('title')) {
+                        $feed->setTitle($this->getTagAttribute($tag, 'title'));
+                    }
+                    $result->addFeed($feed);
+                } elseif ($tag->getAttribute('type') === 'application/atom+xml') {
+                    $feed = (new Feed())
+                        ->setType(Feed::ATOM)
+                        ->setUri($this->getTagAttribute($tag, 'href'));
+                    if($tag->hasAttribute('title')) {
+                        $feed->setTitle($this->getTagAttribute($tag, 'title'));
+                    }
+                    $result->addFeed($feed);
+                }
+            }
+        }
         return $result;
 
     }

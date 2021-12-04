@@ -44,6 +44,14 @@ $result->openGraph()->getLongitude();
 $result->toArray(); // all of the extracted metadata
 ```
 
+It will also extract RSS and/or Atom feeds; `getFeeds()` returns an array of instances of the `Feed` class:
+
+```php
+$feed->getType(); // Feed::RSS or Feed::ATOM
+$feed->getUri();
+$feed->getTitle();
+```
+
 ## Cleansing the data
 
 The package ships with a very simple string cleanser; essentially it just decodes any HTML entities. You're free to provide your own cleanser; just implement the `CleansesStrings` interface, and provide an instance to the parser's constructor.

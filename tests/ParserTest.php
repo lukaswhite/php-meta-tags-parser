@@ -271,4 +271,94 @@ class ParserTest extends \PHPUnit\Framework\TestCase
             $result->getDescription()
         );
     }
+
+    public function test_extracts_feeds()
+    {
+        $html = file_get_contents(
+            sprintf(
+                '%s%s%s%s%s',
+                __DIR__,
+                DIRECTORY_SEPARATOR,
+                'fixtures',
+                DIRECTORY_SEPARATOR,
+                'feeds.html'
+            )
+        );
+
+        $parser = new \Lukaswhite\MetaTagsParser\Parser();
+
+        $result = $parser->parse($html);
+
+        $this->assertTrue(is_array($result->getFeeds()));
+        $this->assertEquals(2, count($result->getFeeds()));
+
+        $this->assertArrayHasKey('feeds', $result->toArray());
+        $this->assertTrue(is_array($result->toArray()['feeds']));
+        $this->assertEquals(2, count($result->toArray()['feeds']));
+    }
+
+    public function test_extracts_rss_feeds()
+    {
+        $html = file_get_contents(
+            sprintf(
+                '%s%s%s%s%s',
+                __DIR__,
+                DIRECTORY_SEPARATOR,
+                'fixtures',
+                DIRECTORY_SEPARATOR,
+                'rss.html'
+            )
+        );
+
+        $parser = new \Lukaswhite\MetaTagsParser\Parser();
+
+        $result = $parser->parse($html);
+
+        $this->assertTrue(is_array($result->getFeeds()));
+        $this->assertEquals(1, count($result->getFeeds()));
+        $this->assertInstanceOf(\Lukaswhite\MetaTagsParser\Feed::class, $result->getFeeds()[0]);
+        /** @var \Lukaswhite\MetaTagsParser\Feed $feed */
+        $feed = $result->getFeeds()[0];
+        $this->assertEquals(\Lukaswhite\MetaTagsParser\Feed::RSS, $feed->getType());
+        $this->assertEquals('http://example.com/feed.rss', $feed->getUri());
+        $this->assertEquals('RSS Feed', $feed->getTitle());
+
+        $this->assertArrayHasKey('feeds', $result->toArray());
+        $this->assertTrue(is_array($result->toArray()['feeds']));
+        $this->assertEquals(1, count($result->toArray()['feeds']));
+        $this->assertTrue(is_array($result->toArray()['feeds'][0]));
+        $this->assertArrayHasKey('type', $result->toArray()['feeds'][0]);
+        $this->assertEquals(\Lukaswhite\MetaTagsParser\Feed::RSS, $result->toArray()['feeds'][0]['type']);
+        $this->assertArrayHasKey('uri', $result->toArray()['feeds'][0]);
+        $this->assertEquals('http://example.com/feed.rss', $result->toArray()['feeds'][0]['uri']);
+        $this->assertArrayHasKey('title', $result->toArray()['feeds'][0]);
+        $this->assertEquals('RSS Feed', $result->toArray()['feeds'][0]['title']);
+    }
+
+    public function test_extracts_atom_feeds()
+    {
+        $html = file_get_contents(
+            sprintf(
+                '%s%s%s%s%s',
+                __DIR__,
+                DIRECTORY_SEPARATOR,
+                'fixtures',
+                DIRECTORY_SEPARATOR,
+                'atom.html'
+            )
+        );
+
+        $parser = new \Lukaswhite\MetaTagsParser\Parser();
+
+        $result = $parser->parse($html);
+
+        $this->assertTrue(is_array($result->getFeeds()));
+        $this->assertEquals(1, count($result->getFeeds()));
+        $this->assertInstanceOf(\Lukaswhite\MetaTagsParser\Feed::class, $result->getFeeds()[0]);
+        /** @var \Lukaswhite\MetaTagsParser\Feed $feed */
+        $feed = $result->getFeeds()[0];
+        $this->assertEquals(\Lukaswhite\MetaTagsParser\Feed::ATOM, $feed->getType());
+        $this->assertEquals('http://example.com/feed.xml', $feed->getUri());
+        $this->assertEquals('Atom Feed', $feed->getTitle());
+    }
 }
